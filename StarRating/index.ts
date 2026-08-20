@@ -105,8 +105,18 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
     }
 
     public getOutputs(): IOutputs {
-        // `null` clears the column; `undefined` would leave it untouched.
-        return { value: this.value ?? undefined };
+        // `null` clears the bound value; `undefined` means "no change".
+        //
+        // `refreshTypes` generates `value?: number`, so `null` does not
+        // type-check and the obvious `this.value ?? undefined` compiles — while
+        // meaning the exact opposite of clearing. A canvas app honours that
+        // strictly and the clear button does nothing at all; a model-driven
+        // form is more forgiving, so the bug hides on the host most people test
+        // on first.
+        //
+        // The generated type is narrower than the contract, so the cast is the
+        // fix rather than a workaround. It is deliberately not `?? undefined`.
+        return { value: this.value === null ? (null as unknown as undefined) : this.value };
     }
 
     public destroy(): void {

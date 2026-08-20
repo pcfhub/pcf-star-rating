@@ -325,6 +325,41 @@ only when it differs. A constant binding is still the wrong configuration and
 `docs/canvas.md` now opens with a warning about it, but the control no longer
 presents it as a dead control.
 
+## Canvas: `?? undefined` in getOutputs meant the clear button emitted nothing
+
+Reported after the previous fix: stars worked in canvas, the clear button did
+not — and the clear button worked fine on a model-driven form.
+
+The code and its own comment disagreed, which is why a read-through had missed
+it twice:
+
+```ts
+// `null` clears the column; `undefined` would leave it untouched.
+return { value: this.value ?? undefined };
+```
+
+`this.value ?? undefined` turns `null` into `undefined` — literally the
+"leave it untouched" case the comment warns about. Clearing emitted "no
+change".
+
+**It was written that way because the generated type is narrower than the
+contract.** `refreshTypes` produces `value?: number` for the bound property, so
+`null` does not type-check, and `?? undefined` is the change that makes `tsc`
+go quiet. It compiles, it reads plausibly, and it is wrong.
+
+The host split is what makes this expensive: a model-driven form is forgiving
+about an undefined output and clears anyway, so the bug is invisible on the
+host most people test first. Canvas honours it strictly and the button is inert.
+
+Fixed by emitting `null` and casting past the generated type. Confirmed in the
+built bundle rather than assumed — the compiled output is
+`value: this.value === null ? null : this.value`, with the cast erased.
+
+The general lesson, worth carrying to the next control: **a generated
+`IOutputs` describes the shape, not the semantics.** Where clearing a value is
+part of the contract, the generated optional-number type cannot express it, and
+satisfying the type instead of the contract silently removes the feature.
+
 ## Still open
 
 - `media/logo.png` is the template placeholder, and `media.screenshots` is
