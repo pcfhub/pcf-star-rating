@@ -41,8 +41,7 @@ Patch(Reviews, ThisItem, { Score: StarRating1.value })
 
 :::callout{type=info}
 A canvas app has no Dataverse column behind the control, so there is no column
-metadata to read. Two things follow: the **Maximum** property is the only
-ceiling, and **Allow half values** has no column type to check against, so half
-steps stay off. Bind a decimal column through a model-driven form if you need
-them.
+metadata to read. The **Maximum** property is therefore the only ceiling, and
+**Allow half values** is taken at face value — there is no column type to
+contradict it. Bind it to a variable that can hold a fractional number.
 :::

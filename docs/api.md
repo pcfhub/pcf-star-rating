@@ -31,10 +31,11 @@ order: 5
 `Whole.None | Decimal`. Which one it actually is at runtime is what decides
 whether half values are possible.
 
-**`allowHalf` is conditional.** It is honoured only when the bound column is a
-Decimal column. On a Whole Number column, and in a canvas app where there is no
-column type to inspect, the control stays on whole steps rather than writing a
-value the column would silently truncate. See [Limitations](limitations.md).
+**`allowHalf` can be overruled.** It is your declaration and it normally stands,
+including in a canvas app. The one exception is a **Whole Number** column, which
+cannot store 3.5 at all: there the control stays on whole steps rather than
+writing a value the column would silently truncate. See
+[Limitations](limitations.md).
 
 **`max` is a request, not a guarantee.** The control uses the smaller of this
 value and the bound column's own maximum, then clamps the result to between 1

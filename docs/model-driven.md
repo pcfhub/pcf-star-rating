@@ -18,7 +18,7 @@ order: 4
 
 | Column type | Supported | Notes |
 | --- | --- | --- |
-| Whole Number | Yes | Whole steps only. **Allow half values** is ignored. |
+| Whole Number | Yes | Whole steps only. **Allow half values** is overruled here. |
 | Decimal Number | Yes | Half steps available when **Allow half values** is on. |
 | Currency, Floating Point | No | Not offered by the designer; the control binds to Whole Number and Decimal only. |
 | Anything else | No | The control does not appear in the component list for the column. |

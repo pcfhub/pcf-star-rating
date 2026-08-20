@@ -57,22 +57,48 @@ The other two costs the reference names still stand and were accepted: the hub
 publishes the type as `Whole.None | Decimal`, and the demo panel's editor
 inference falls through to a text box.
 
-## Deciding half steps from `parameters.value.type`, not from metadata
+## Deciding half steps — and the first version of this was wrong
 
 The interesting consequence of the type group. A rating control that offers half
 stars on a Whole Number column writes 3.5 to a column that truncates it to 3 —
 the user's choice is silently altered on save.
 
 `attributes.Precision` would be the obvious signal and is not reachable (above).
-The signal that *is* reachable is `context.parameters.value.type`, which reports
-the bound column's real type at runtime for a type-grouped property. So
-`resolveStep()` tests it against `/decimal|fp|float|currency/i` and returns 1
-otherwise, regardless of what `allowHalf` says.
+`context.parameters.value.type` is, so the first implementation tested it against
+`/decimal|fp|float|currency/i` and forced whole steps otherwise.
 
-This makes `allowHalf` a conditional property, which is a documentation burden
-rather than a code one — it is called out in `docs/api.md`, `docs/limitations.md`,
-`docs/faq.md` and `docs/examples.md`, because "I turned it on and nothing
-happened" is otherwise a guaranteed issue.
+**That was the exact bug the skill had just been updated to warn about.**
+`pcfhub-controls-skill` commit `7c92019`, written from a real model-driven form:
+for a type-grouped property the platform may report *the group’s accepted types*
+rather than the resolved member — a string naming every type in the group,
+whichever column is bound. `pcf-choices-picker` tested `/multi/i` that way and
+rendered every single-select column as a multi-select on real forms.
+
+Here the failure would have been worse than no check: on such a host the string
+contains "Decimal" whatever the column is, so `/decimal/i` matches on a Whole
+Number column and enables precisely the half step the guard existed to prevent.
+
+The rewrite compares exactly, and **vetoes rather than enables**:
+
+```ts
+if (!context.parameters.allowHalf.raw) return 1;
+return (context.parameters.value.type ?? '').trim() === 'Whole.None' ? 1 : 0.5;
+```
+
+An exact `Whole.None` is proof the column truncates, and the half step is refused.
+Anything else — a resolved `Decimal`, or a group string the control cannot
+interpret — leaves the maker’s `allowHalf` standing. That is the only shape that
+behaves correctly on both kinds of host: it never enables a half step on a column
+known to reject it, and it never silently disables one the maker asked for.
+
+The value’s own shape cannot help here, unlike the multi-select case.
+`Array.isArray` is proof of arity; `Number.isInteger(3)` is not proof of a whole
+number *column*, because a Decimal column holding 3.0 looks identical.
+
+`allowHalf` is therefore a maker declaration with one platform override, which is
+a documentation burden rather than a code one — called out in `docs/api.md`,
+`docs/limitations.md`, `docs/faq.md`, `docs/canvas.md`, `docs/examples.md` and
+`docs/model-driven.md`.
 
 ## Platform state the template never touched
 
@@ -119,15 +145,13 @@ preset that omitted it.
 `ceiling === undefined` branch and uses the maker's `max` — the same path a
 canvas app takes.
 
-**Unverified:** the `half-steps` preset depends on the harness reporting a
-`type` string that matches `/decimal|fp|float|currency/i` for the bound
-property. The harness synthesises `Property` objects from `presets[].props` and
-there is no real column behind them, so what it puts in `type` is not something
-this repository can read. If it reports something else, that preset renders as
-whole stars and the demo is quietly wrong — which would make it `limited`, not
-`full`. **Check `demo-harness/context/Parameters.ts` in the hub repo before
-publishing.** Everything else in this section was read from source or observed
-in a build; this one was not.
+The `half-steps` preset is safe under the rewritten `resolveStep()` in a way it
+was not under the first version. It now needs the harness to report anything
+*other than* the exact string `Whole.None`, rather than needing it to report a
+specific fractional type — so the default behaviour of a harness that synthesises
+`Property` objects from `presets[].props` works in its favour. Still worth
+confirming against `demo-harness/context/Parameters.ts` in the hub repo, but it
+is no longer the difference between `full` and `limited`.
 
 ## Solution pack
 

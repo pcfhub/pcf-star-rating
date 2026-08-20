@@ -15,8 +15,9 @@ confirm the solution imported and that customizations were published.
 
 ## Why are half stars not working?
 
-The column is a Whole Number column. **Allow half values** is only honoured on a
-Decimal column, because a Whole Number column cannot store 3.5 — see
+The column is a **Whole Number** column. It cannot store 3.5, so the control
+refuses the half step no matter what **Allow half values** says. Change the
+column to Decimal with a precision of at least 1 — see
 [Limitations](limitations.md).
 
 ## Why do I see fewer icons than I set?

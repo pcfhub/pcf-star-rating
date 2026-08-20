@@ -14,8 +14,11 @@ const PATHS: Record<Shape, string> = {
     circle: 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z',
 };
 
-/** Column types that can actually store a half step. */
-const FRACTIONAL = /decimal|fp|float|currency/i;
+/**
+ * The one column type that definitively cannot hold a half step. Compared
+ * exactly — never substring-matched — see `resolveStep()`.
+ */
+const WHOLE_ONLY = 'Whole.None';
 
 const SHAPES: readonly Shape[] = ['star', 'heart', 'circle'];
 const SIZES: readonly IInputs['size']['raw'][] = ['small', 'medium', 'large'];
@@ -310,15 +313,28 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
     // ----------------------------------------------------------------- helpers
 
     /**
-     * A type-grouped property reports the *bound column's* type at runtime, and
-     * that is the only honest way to know whether a half step can be saved. A
-     * Whole.None column silently truncates 3.5 to 3, so the control refuses the
-     * half step rather than writing a value the user did not choose.
+     * `allowHalf` is the maker's declaration, and it stands unless the platform
+     * definitively contradicts it.
+     *
+     * The type string is compared **exactly**, never substring-matched. For a
+     * type-grouped property a host may report the *group's accepted types*
+     * rather than the resolved member — a string naming every type in the
+     * group, whichever column is actually bound. A loose test like
+     * `/decimal/i` would then match on a Whole Number column and enable the
+     * half step it exists to prevent, which is worse than no check at all.
+     *
+     * So the comparison vetoes rather than enables. An exact `Whole.None` is
+     * proof the column truncates 3.5 to 3, and the half step is refused.
+     * Anything else — a resolved `Decimal`, or a group string this control
+     * cannot interpret — leaves the maker's setting standing, which is the only
+     * answer that behaves correctly on every host.
      */
     private resolveStep(context: ComponentFramework.Context<IInputs>): number {
-        const fractional = FRACTIONAL.test(context.parameters.value.type);
+        if (!context.parameters.allowHalf.raw) {
+            return 1;
+        }
 
-        return context.parameters.allowHalf.raw && fractional ? 0.5 : 1;
+        return (context.parameters.value.type ?? '').trim() === WHOLE_ONLY ? 1 : 0.5;
     }
 
     /**

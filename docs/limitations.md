@@ -6,11 +6,17 @@ order: 7
 
 # Limitations
 
-- **Half values need a Decimal column.** `allowHalf` is ignored on a Whole
-  Number column, and in a canvas app where there is no column type to inspect.
-  This is a decision, not a bug: a Whole Number column truncates 3.5 to 3, so
-  offering the half step there would save a value the user did not choose. Use
-  a Decimal column with a precision of at least 1.
+- **Half values need a Decimal column.** `allowHalf` is ignored on a **Whole
+  Number** column. This is a decision, not a bug: that column type truncates
+  3.5 to 3, so offering the half step would save a value the user did not
+  choose. Use a Decimal column with a precision of at least 1.
+
+- **On some hosts the column type cannot be read.** For a property that accepts
+  more than one column type, the platform sometimes reports the *set* of types
+  the property accepts rather than the one actually bound. The control cannot
+  tell the difference, so it does the safe thing in the other direction: it
+  takes `allowHalf` at your word. Switch it on only for a column that can hold
+  a half step, because on those hosts nothing will stop you.
 
 - **Column metadata is model-driven only.** The control reads the column's
   maximum value to avoid drawing more icons than the column can hold. A canvas

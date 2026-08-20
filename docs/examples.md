@@ -42,6 +42,8 @@ selects the whole. From the keyboard, each arrow press moves by 0.5.
 :::callout{type=warning}
 Switching **Allow half values** on while the column is a Whole Number column
 does nothing, and that is deliberate — see [Limitations](limitations.md).
+Everywhere else the setting is taken at your word, so point it at a column
+that can actually hold a half step.
 :::
 
 ## A ten-point score without a clear button
