@@ -285,6 +285,46 @@ delimiter. Naming the custom property with its real leading double hyphen
 inside a manifest comment broke the parse, and `pcf-scripts` reported it as a
 bare `Line: 92 Column: 18` with no message. Cost two builds to find.
 
+## Canvas: the unconditional value assignment made the control look locked
+
+Reported from a canvas app: clicking a star or the clear button did nothing.
+
+Diagnosed from one detail in the maker's screenshot rather than by guessing.
+The **clear button was visible**, and `clearButton.hidden` is
+`!showClear || !interactive || value === null` — so `interactive` was true, and
+the control was not disabled, not read-only and not security-trimmed. It was
+not locked. It was snapping back.
+
+`render()` had `this.value = this.clamp(parameter.raw)` with no guard, which
+the template's own `index.ts` warns against for exactly this reason and which
+this control then failed to apply. `updateView` runs after our own
+`notifyOutputChanged`, so the platform's value is re-adopted immediately after
+every click. On a model-driven form that is harmless, because the platform has
+actually stored the new value and hands the same one back.
+
+In a canvas app it is not harmless, because **a code component never writes to
+its own input**. It raises `OnChange` and the app decides what to store. The
+maker had bound `value` to the literal `3`, so the platform handed back `3`
+after every click.
+
+Simulated the lifecycle rather than reasoning about it — clicks 4, 5, clear, 2:
+
+| guard | binding | painted |
+| --- | --- | --- |
+| off | constant | `3 -> 3 -> 3 -> 3 -> 3` |
+| on | constant | `3 -> 4 -> 5 -> blank -> 2` |
+| off or on | variable | `3 -> 4 -> 5 -> blank -> 2` |
+
+The detail that made the report confusing: in the broken row `OnChange` still
+fired four times and the app variable still ended up holding `2`. The binding
+was half-working, and only the display was stuck — which is why it read as
+"locked" rather than as "not saving".
+
+Fixed by tracking the last value the platform supplied and adopting a new one
+only when it differs. A constant binding is still the wrong configuration and
+`docs/canvas.md` now opens with a warning about it, but the control no longer
+presents it as a dead control.
+
 ## Still open
 
 - `media/logo.png` is the template placeholder, and `media.screenshots` is

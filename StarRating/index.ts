@@ -49,6 +49,13 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
 
     private value: number | null = null;
 
+    /**
+     * The last value the *platform* supplied, as opposed to the one the user
+     * picked. `undefined` means nothing has been supplied yet, which is why it
+     * is not simply `null` — null is a real value here.
+     */
+    private lastIncoming: number | null | undefined = undefined;
+
     /** Rebuilding icons on every pass would destroy focus, so track the count. */
     private icons: SVGSVGElement[] = [];
     private shape: Shape | null = null;
@@ -146,7 +153,26 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
 
         this.max = this.resolveMax(context);
         this.step = this.resolveStep(context);
-        this.value = this.clamp(parameter.raw);
+
+        // Guarded, not assigned unconditionally — the same rule as writing an
+        // input's `value` while the user is typing, and it matters more here.
+        //
+        // `updateView` runs after this control's own `notifyOutputChanged`, so
+        // an unconditional assignment hands the user's click straight back to
+        // whatever the platform last supplied. In a canvas app whose `value` is
+        // bound to a constant rather than to a variable, that is *every* click:
+        // the rating snaps back within a frame and the control reads as locked
+        // even though it is working and `OnChange` is firing.
+        const incoming = this.clamp(parameter.raw);
+
+        if (incoming !== this.lastIncoming) {
+            this.lastIncoming = incoming;
+            this.value = incoming;
+        } else {
+            // Nothing new from the platform, but `max` or `step` may have moved
+            // under the value the user is holding.
+            this.value = this.clamp(this.value);
+        }
 
         const shape = SHAPES.includes(context.parameters.shape.raw) ? context.parameters.shape.raw : 'star';
         const size = SIZES.includes(context.parameters.size.raw) ? context.parameters.size.raw : 'medium';

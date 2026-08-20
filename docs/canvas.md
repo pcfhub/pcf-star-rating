@@ -15,13 +15,26 @@ order: 3
 
 ## Wiring the properties
 
+:::callout{type=warning}
+**Bind `Value` to a variable, not to a number.** This is the one mistake that
+makes the control look broken. A canvas code component does not write back to
+its own input: it raises `OnChange` and the app decides what to store. Bind
+`Value` to the literal `3` and the app has nowhere to put the change, so every
+click is overwritten by the `3` on the next render and the rating appears
+frozen — even though `OnChange` is firing correctly each time.
+:::
+
+Create the variable first, in `App.OnStart` or the screen's `OnVisible`:
+
 ```powerfx
 Set(varRating, 3);
 ```
 
+Then point the control at it:
+
 | Property | Value |
 | --- | --- |
-| Value | `varRating` |
+| Value | `varRating` — a variable, never a literal |
 | Maximum | `5` |
 | Allow half values | `false` |
 | Shape | `"star"` |

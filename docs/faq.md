@@ -25,6 +25,23 @@ column to Decimal with a precision of at least 1 — see
 The control never draws more icons than the bound column's **Maximum value**
 allows. Raise the column's maximum, or lower the **Maximum** property to match.
 
+## In a canvas app the rating will not change when I click. Is it locked?
+
+Almost certainly **Value** is bound to a number rather than to a variable.
+
+A canvas code component cannot write to its own input. It raises `OnChange`,
+and the app stores the result. With `Value` set to the literal `3`, there is
+nowhere for the change to go, so the next render puts `3` back and the control
+looks frozen. `OnChange` is firing the whole time — you can confirm it by
+checking the variable it sets.
+
+Set `Value` to `varRating`, `OnChange` to `Set(varRating, StarRating1.value)`,
+and initialise `varRating` in `App.OnStart`.
+
+If it is genuinely locked rather than snapping back, the clear button will be
+hidden too, and the icons dimmed — that means **DisplayMode** is `View` or
+`Disabled`.
+
 ## Why do the icons wrap onto two rows?
 
 The column is narrower than the scale needs. Twenty `medium` icons want roughly
