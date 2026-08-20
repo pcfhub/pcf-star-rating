@@ -1,0 +1,131 @@
+/*
+  Colours come from custom properties with a fallback, never from fixed hex
+  values in the rules themselves. A host that themes the form only has to set
+  the property; a host that does not still gets a readable control. Hard-coding
+  the palette here is what makes a control fail contrast in dark mode.
+*/
+.StarRating {
+    --StarRating-filled: #f2b100;
+    --StarRating-empty: #c8c6c4;
+    --StarRating-invalid: #a4262c;
+    --StarRating-focus: #0f6cbd;
+    --StarRating-size: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 100%;
+}
+
+.StarRating--hidden {
+    display: none;
+}
+
+.StarRating-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.StarRating-group--small {
+    --StarRating-size: 16px;
+}
+
+.StarRating-group--medium {
+    --StarRating-size: 20px;
+}
+
+.StarRating-group--large {
+    --StarRating-size: 28px;
+}
+
+.StarRating-icon {
+    width: var(--StarRating-size);
+    height: var(--StarRating-size);
+    flex: 0 0 auto;
+    cursor: pointer;
+    /* The whole control is one tab stop; the icons rove within it. */
+    outline: none;
+}
+
+.StarRating-icon:focus-visible {
+    outline: 2px solid var(--StarRating-focus);
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+.StarRating-path {
+    fill: var(--StarRating-empty);
+}
+
+/*
+  The half state is one icon with its two paths clipped, rather than a second
+  set of half-shaped assets — so adding a shape means adding one path string.
+  `inset()` is measured from the leading edge, which `direction` already flips.
+*/
+.StarRating-path--half {
+    fill: var(--StarRating-filled);
+    clip-path: inset(0 100% 0 0);
+}
+
+.StarRating-icon.is-full .StarRating-path--full,
+.StarRating-icon.is-preview .StarRating-path--full {
+    fill: var(--StarRating-filled);
+}
+
+.StarRating-icon.is-half .StarRating-path--half {
+    clip-path: inset(0 50% 0 0);
+}
+
+.StarRating--disabled .StarRating-icon {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.StarRating--invalid {
+    --StarRating-empty: var(--StarRating-invalid);
+}
+
+.StarRating-clear {
+    border: none;
+    background: none;
+    padding: 2px 4px;
+    cursor: pointer;
+    color: inherit;
+    font-size: 12px;
+    line-height: 1;
+    border-radius: 2px;
+}
+
+.StarRating-clear:focus-visible {
+    outline: 2px solid var(--StarRating-focus);
+    outline-offset: 1px;
+}
+
+.StarRating-clear[hidden] {
+    display: none;
+}
+
+.StarRating-message {
+    margin: 0;
+    font-size: 12px;
+    color: var(--StarRating-invalid);
+}
+
+.StarRating-message[hidden] {
+    display: none;
+}
+
+/* Honour a user who has asked the OS for less motion — and for higher contrast. */
+@media (forced-colors: active) {
+    .StarRating-path {
+        fill: ButtonFace;
+        stroke: ButtonText;
+        stroke-width: 1px;
+    }
+
+    .StarRating-icon.is-full .StarRating-path--full,
+    .StarRating-icon.is-half .StarRating-path--half {
+        fill: Highlight;
+    }
+}

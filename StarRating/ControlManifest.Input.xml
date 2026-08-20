@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <!--
+    The version here is what the Power Platform upgrades on, and the release
+    workflow refuses to publish a tag that disagrees with it. Bump this in the
+    same commit as the tag.
+  -->
+  <control namespace="PCFHub"
+           constructor="StarRating"
+           version="0.1.0"
+           display-name-key="StarRating_Name"
+           description-key="StarRating_Desc"
+           control-type="standard">
+
+    <!--
+      Nothing here leaves the browser: no WebAPI, no device, no third-party
+      service. That is also what makes the hub demo `full` fidelity.
+    -->
+    <external-service-usage enabled="false" />
+
+    <!--
+      One bound property, accepting both column types people actually store a
+      rating in.
+
+      A type-group is the right shape here and a second bound property is not:
+      a field control binds its *first* bound property to the column it is
+      placed on and renders every additional one as its own column picker in
+      the configuration pane, so a maker would be asked to choose a second
+      column for a control that attaches to exactly one.
+
+      The cost is real and paid in index.ts — a type-grouped property generates
+      as the base `Property` type, so `raw` is `any` and `attributes` loses its
+      specific metadata. Both are narrowed once, at the top of render().
+    -->
+    <type-group name="ratingValue">
+      <type>Whole.None</type>
+      <type>Decimal</type>
+    </type-group>
+
+    <property name="value"
+              display-name-key="value_Name"
+              description-key="value_Desc"
+              of-type-group="ratingValue"
+              usage="bound"
+              required="true" />
+
+    <property name="max"
+              display-name-key="max_Name"
+              description-key="max_Desc"
+              of-type="Whole.None"
+              usage="input"
+              required="false"
+              default-value="5" />
+
+    <!--
+      Honoured only when the bound column is Decimal. A Whole.None column
+      cannot store 3.5, so the control ignores this rather than rounding
+      silently — see docs/limitations.md.
+    -->
+    <property name="allowHalf"
+              display-name-key="allowHalf_Name"
+              description-key="allowHalf_Desc"
+              of-type="TwoOptions"
+              usage="input"
+              required="false"
+              default-value="false" />
+
+    <property name="shape"
+              display-name-key="shape_Name"
+              description-key="shape_Desc"
+              of-type="Enum"
+              usage="input"
+              required="false"
+              default-value="star">
+      <value name="star" display-name-key="shape_Star">star</value>
+      <value name="heart" display-name-key="shape_Heart">heart</value>
+      <value name="circle" display-name-key="shape_Circle">circle</value>
+    </property>
+
+    <property name="size"
+              display-name-key="size_Name"
+              description-key="size_Desc"
+              of-type="Enum"
+              usage="input"
+              required="false"
+              default-value="medium">
+      <value name="small" display-name-key="size_Small">small</value>
+      <value name="medium" display-name-key="size_Medium">medium</value>
+      <value name="large" display-name-key="size_Large">large</value>
+    </property>
+
+    <property name="showClear"
+              display-name-key="showClear_Name"
+              description-key="showClear_Desc"
+              of-type="TwoOptions"
+              usage="input"
+              required="false"
+              default-value="true" />
+
+    <resources>
+      <code path="index.ts" order="1" />
+      <css path="css/StarRating.css" order="1" />
+      <resx path="strings/StarRating.1033.resx" version="1.0.0" />
+      <resx path="strings/StarRating.1031.resx" version="1.0.0" />
+      <resx path="strings/StarRating.1036.resx" version="1.0.0" />
+      <resx path="strings/StarRating.1041.resx" version="1.0.0" />
+      <resx path="strings/StarRating.3082.resx" version="1.0.0" />
+    </resources>
+
+    <!--
+      No <feature-usage>: the control reads context.mode, context.userSettings
+      and context.resources, none of which are gated features.
+    -->
+  </control>
+</manifest>

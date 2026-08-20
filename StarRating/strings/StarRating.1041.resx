@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Display names and descriptions for everything declared in
+    ControlManifest.Input.xml. PCFHub reads the manifest, so these strings are
+    what appear in the component's API reference on the hub as well as in the
+    maker's properties pane.
+
+    Copy this file to add a language — StarRating.3082.resx for Spanish, and so
+    on — then list it under <resources> in the manifest.
+  -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="StarRating_Name" xml:space="preserve">
+    <value>スター評価</value>
+  </data>
+  <data name="StarRating_Desc" xml:space="preserve">
+    <value>数値列をアクセシビリティに配慮したスター評価として表示します。</value>
+  </data>
+  <data name="value_Name" xml:space="preserve">
+    <value>値</value>
+  </data>
+  <data name="value_Desc" xml:space="preserve">
+    <value>このコントロールが読み書きする整数または小数の列。</value>
+  </data>
+  <data name="max_Name" xml:space="preserve">
+    <value>最大値</value>
+  </data>
+  <data name="max_Desc" xml:space="preserve">
+    <value>表示するアイコンの数。列自体の最大値に制限されます。</value>
+  </data>
+  <data name="allowHalf_Name" xml:space="preserve">
+    <value>半値を許可</value>
+  </data>
+  <data name="allowHalf_Desc" xml:space="preserve">
+    <value>0.5 刻みを許可します。整数列では保存できないため無視されます。</value>
+  </data>
+  <data name="shape_Name" xml:space="preserve">
+    <value>形状</value>
+  </data>
+  <data name="shape_Desc" xml:space="preserve">
+    <value>描画するアイコン。</value>
+  </data>
+  <data name="shape_Star" xml:space="preserve">
+    <value>星</value>
+  </data>
+  <data name="shape_Heart" xml:space="preserve">
+    <value>ハート</value>
+  </data>
+  <data name="shape_Circle" xml:space="preserve">
+    <value>円</value>
+  </data>
+  <data name="size_Name" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="size_Desc" xml:space="preserve">
+    <value>アイコンのサイズ。</value>
+  </data>
+  <data name="size_Small" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="size_Medium" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="size_Large" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="showClear_Name" xml:space="preserve">
+    <value>クリアボタンを表示</value>
+  </data>
+  <data name="showClear_Desc" xml:space="preserve">
+    <value>列を空に戻すボタンを表示します。</value>
+  </data>
+  <data name="StarRating_AriaLabel" xml:space="preserve">
+    <value>評価</value>
+  </data>
+  <data name="StarRating_Clear" xml:space="preserve">
+    <value>評価をクリア</value>
+  </data>
+  <data name="StarRating_ValueText" xml:space="preserve">
+    <value>{1} 中 {0}</value>
+  </data>
+  <data name="StarRating_Empty" xml:space="preserve">
+    <value>未評価</value>
+  </data>
+  <data name="StarRating_NoAccess" xml:space="preserve">
+    <value>この値にアクセスする権限がありません。</value>
+  </data>
+</root>

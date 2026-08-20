@@ -1,0 +1,93 @@
+{
+    "schemaVersion": 1,
+
+    "slug": "pcf-star-rating",
+    "name": "Star Rating",
+    "tagline": "A numeric column as an accessible star rating.",
+    "category": "input",
+    "tags": ["rating", "accessible", "keyboard", "numeric"],
+
+    "control": {
+        "namespace": "PCFHub",
+        "constructor": "StarRating",
+        "type": "field",
+        "framework": "standard",
+        "manifestPath": "StarRating/ControlManifest.Input.xml"
+    },
+
+    "links": {
+        "homepage": "https://github.com/pcfhub/pcf-star-rating",
+        "support": "https://github.com/pcfhub/pcf-star-rating/issues",
+        "license": "MIT"
+    },
+
+    "docs": {
+        "path": "docs"
+    },
+
+    "media": {
+        "logo": "media/logo.png",
+        "screenshots": []
+    },
+
+    "demo": {
+        "fidelity": "full",
+        "bundle": "out/controls/StarRating/bundle.js",
+        "styles": ["out/controls/StarRating/css/StarRating.css"],
+        "presets": [
+            {
+                "slug": "default",
+                "name": "Default",
+                "description": "Five stars on a whole number column, three selected.",
+                "props": {
+                    "value": 3,
+                    "max": 5,
+                    "allowHalf": false,
+                    "shape": "star",
+                    "size": "medium",
+                    "showClear": true
+                },
+                "isDefault": true
+            },
+            {
+                "slug": "half-steps",
+                "name": "Half steps",
+                "description": "A decimal column with half values enabled — click the left half of an icon.",
+                "props": {
+                    "value": 3.5,
+                    "max": 5,
+                    "allowHalf": true,
+                    "shape": "star",
+                    "size": "large",
+                    "showClear": true
+                }
+            },
+            {
+                "slug": "hearts-ten",
+                "name": "Ten hearts",
+                "description": "A different shape and scale, with the clear button switched off.",
+                "props": {
+                    "value": 7,
+                    "max": 10,
+                    "allowHalf": false,
+                    "shape": "heart",
+                    "size": "small",
+                    "showClear": false
+                }
+            },
+            {
+                "slug": "empty",
+                "name": "Not rated",
+                "description": "The empty state — no icon filled, and no clear button until there is something to clear.",
+                "props": {
+                    "value": null,
+                    "max": 5,
+                    "allowHalf": false,
+                    "shape": "circle",
+                    "size": "medium",
+                    "showClear": true
+                }
+            }
+        ]
+    }
+}

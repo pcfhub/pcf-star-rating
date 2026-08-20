@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--
+    Display names and descriptions for everything declared in
+    ControlManifest.Input.xml. PCFHub reads the manifest, so these strings are
+    what appear in the component's API reference on the hub as well as in the
+    maker's properties pane.
+
+    Copy this file to add a language — StarRating.3082.resx for Spanish, and so
+    on — then list it under <resources> in the manifest.
+  -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <data name="StarRating_Name" xml:space="preserve">
+    <value>Évaluation par étoiles</value>
+  </data>
+  <data name="StarRating_Desc" xml:space="preserve">
+    <value>Une colonne numérique sous forme d’évaluation accessible par étoiles.</value>
+  </data>
+  <data name="value_Name" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="value_Desc" xml:space="preserve">
+    <value>La colonne de nombre entier ou décimal que ce contrôle lit et écrit.</value>
+  </data>
+  <data name="max_Name" xml:space="preserve">
+    <value>Maximum</value>
+  </data>
+  <data name="max_Desc" xml:space="preserve">
+    <value>Nombre d’icônes à afficher. Limité au maximum de la colonne.</value>
+  </data>
+  <data name="allowHalf_Name" xml:space="preserve">
+    <value>Autoriser les demi-valeurs</value>
+  </data>
+  <data name="allowHalf_Desc" xml:space="preserve">
+    <value>Autorise les demi-pas. Ignoré sur une colonne de nombre entier, qui ne peut pas les stocker.</value>
+  </data>
+  <data name="shape_Name" xml:space="preserve">
+    <value>Forme</value>
+  </data>
+  <data name="shape_Desc" xml:space="preserve">
+    <value>Icône à dessiner.</value>
+  </data>
+  <data name="shape_Star" xml:space="preserve">
+    <value>Étoile</value>
+  </data>
+  <data name="shape_Heart" xml:space="preserve">
+    <value>Cœur</value>
+  </data>
+  <data name="shape_Circle" xml:space="preserve">
+    <value>Cercle</value>
+  </data>
+  <data name="size_Name" xml:space="preserve">
+    <value>Taille</value>
+  </data>
+  <data name="size_Desc" xml:space="preserve">
+    <value>Taille de l’icône.</value>
+  </data>
+  <data name="size_Small" xml:space="preserve">
+    <value>Petite</value>
+  </data>
+  <data name="size_Medium" xml:space="preserve">
+    <value>Moyenne</value>
+  </data>
+  <data name="size_Large" xml:space="preserve">
+    <value>Grande</value>
+  </data>
+  <data name="showClear_Name" xml:space="preserve">
+    <value>Afficher le bouton d’effacement</value>
+  </data>
+  <data name="showClear_Desc" xml:space="preserve">
+    <value>Affiche un bouton qui remet la colonne à vide.</value>
+  </data>
+  <data name="StarRating_AriaLabel" xml:space="preserve">
+    <value>Évaluation</value>
+  </data>
+  <data name="StarRating_Clear" xml:space="preserve">
+    <value>Effacer l’évaluation</value>
+  </data>
+  <data name="StarRating_ValueText" xml:space="preserve">
+    <value>{0} sur {1}</value>
+  </data>
+  <data name="StarRating_Empty" xml:space="preserve">
+    <value>Non évalué</value>
+  </data>
+  <data name="StarRating_NoAccess" xml:space="preserve">
+    <value>Vous n’avez pas accès à cette valeur.</value>
+  </data>
+</root>
