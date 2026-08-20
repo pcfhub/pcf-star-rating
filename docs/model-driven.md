@@ -41,6 +41,10 @@ even if **Maximum** is set to 10.
 - **The field label** from the form is used as the group's accessible name, so
   a screen reader says "Satisfaction, 3 of 5" rather than a generic "Rating".
 
+The control fills the width of its form column and reflows when the scale does
+not fit on one row, so a 20-icon scale stays usable in a narrow section rather
+than being clipped.
+
 :::callout{type=info}
 The control is localised into English, Spanish, French, German and Japanese. The
 language follows the user's own setting; there is nothing for a maker to

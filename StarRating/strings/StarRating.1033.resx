@@ -122,6 +122,12 @@
   <data name="size_Large" xml:space="preserve">
     <value>Large</value>
   </data>
+  <data name="color_Name" xml:space="preserve">
+    <value>Colour</value>
+  </data>
+  <data name="color_Desc" xml:space="preserve">
+    <value>The colour of a filled icon. Any CSS colour; falls back to the default if the browser cannot read it.</value>
+  </data>
   <data name="showClear_Name" xml:space="preserve">
     <value>Show clear button</value>
   </data>

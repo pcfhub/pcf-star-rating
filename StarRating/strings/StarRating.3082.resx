@@ -122,6 +122,12 @@
   <data name="size_Large" xml:space="preserve">
     <value>Grande</value>
   </data>
+  <data name="color_Name" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="color_Desc" xml:space="preserve">
+    <value>El color de un icono relleno. Cualquier color CSS; se usa el predeterminado si el navegador no puede interpretarlo.</value>
+  </data>
   <data name="showClear_Name" xml:space="preserve">
     <value>Mostrar botón de borrado</value>
   </data>

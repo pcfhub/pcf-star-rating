@@ -15,7 +15,7 @@ own tooling: `npm run refreshTypes`, `npm run lint`, `npm run build`, and a full
 | `npm run check` | passes, including the demo-path check once `out/` exists |
 | `npm run lint` | clean |
 | `npm run build` | `out/controls/StarRating/bundle.js`, **18.7 KiB** |
-| `msbuild` Release pack | rebuilds production: **8,785 bytes**, both zips |
+| `msbuild` Release pack | rebuilds production: **8,994 bytes**, both zips |
 
 No React anywhere: `grep -c '__SECRET_INTERNALS\|react-dom.production'` on the
 bundle returns 0. For scale, `pcf-barcode-scanner` is 7.78 KiB and
@@ -226,6 +226,64 @@ template's own history (`_template` commit `3a4f6dd`).
 One thing did **not** go back: `parameters.value.type` as the half-step signal.
 It is specific to a numeric type group and would be noise in a text-field
 template. It belongs in the skill instead.
+
+## The 20-icon scale overflowed its column
+
+Reported from a real form: at `max` 20 in a narrow field, the trailing icons and
+the clear button were painted outside the cell and clipped away. Measured in a
+browser against the shipped stylesheet rather than diagnosed from the screenshot:
+
+| Container | Group width | Clear button | 
+| --- | --- | --- |
+| 320px | 438px | right edge at x=487 against a cell edge of 350 — invisible |
+| 200px | 438px | invisible |
+| 320px, `max` 5 | 108px | visible |
+
+438px is 20 icons at 20px plus 19 gaps at 2px, and the group held it at every
+container width. Two causes, both in the stylesheet:
+
+- **A flex item's `min-width` defaults to `auto`**, which means "never shrink
+  below your content". So `.StarRating-group` kept its full 438px and pushed the
+  clear button out of the cell instead of reflowing. `max-width: 100%` on the
+  parent caps that box; it does nothing about content overflowing it.
+- **The icons are `flex: 0 0 auto`** and deliberately stay that way — shrinking
+  them takes the `small` scale below a usable touch target. With neither the
+  group nor its children able to shrink, there was no way to fit.
+
+Fixed with `min-width: 0` and `flex-wrap: wrap` on the group, `flex` rather than
+`inline-flex` on the container, and `flex: 0 0 auto` on the clear button so it is
+never the thing squeezed out. Twenty icons now reflow onto two rows at 320px and
+three at 200px, with the clear button visible in every case.
+
+**The same root cause hid a second defect nobody had reported.** The container
+being a single non-wrapping flex row put the validation message *beside* the
+icons rather than beneath them — so the platform's own error text read as a
+caption. Confirmed by measurement (`message.top` inside the group's box), fixed
+with `flex-basis: 100%`. Worth recording because it was found by reproducing the
+reported bug properly rather than by patching the symptom described.
+
+## The colour property, and why it is validated
+
+`color` (`SingleLine.Text`, default `#F2B100`) writes the `StarRating-filled`
+custom property on the container at render. It sets exactly one thing: the fill
+of a selected icon. Unselected icons, the error state and the focus ring keep
+fixed colours so contrast and the invalid state hold whatever a maker picks.
+
+**A custom property accepts any string.** The CSSOM does not validate it, because
+a custom property has no type until something substitutes it — so a typo would
+silently blank the icons, and `url(evil.svg)` would become a live SVG paint
+server the moment `fill: var(...)` substituted it. `CSS.supports('color', value)`
+is the browser's own colour parser and rejects both.
+
+Verified against ten inputs in a browser: `#0F6CBD`, `goldenrod`, `rgb(242 177
+0)` and `hsl(44 100% 47%)` all substitute and paint; empty, whitespace,
+`notacolour`, `url(evil.svg)` and a `red; background:url(x)` injection attempt all
+fall back to the default.
+
+**An XML comment may not contain a double hyphen** — anywhere, not just as a
+delimiter. Naming the custom property with its real leading double hyphen
+inside a manifest comment broke the parse, and `pcf-scripts` reported it as a
+bare `Line: 92 Column: 18` with no message. Cost two builds to find.
 
 ## Still open
 

@@ -122,6 +122,12 @@
   <data name="size_Large" xml:space="preserve">
     <value>Groß</value>
   </data>
+  <data name="color_Name" xml:space="preserve">
+    <value>Farbe</value>
+  </data>
+  <data name="color_Desc" xml:space="preserve">
+    <value>Die Farbe eines gefullten Symbols. Jede CSS-Farbe; andernfalls gilt der Standardwert.</value>
+  </data>
   <data name="showClear_Name" xml:space="preserve">
     <value>Schaltfläche zum Löschen anzeigen</value>
   </data>

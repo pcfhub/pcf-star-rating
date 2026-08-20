@@ -20,6 +20,14 @@ const PATHS: Record<Shape, string> = {
  */
 const WHOLE_ONLY = 'Whole.None';
 
+/**
+ * Fallback for the `color` property, and the same value the stylesheet declares
+ * for `--StarRating-filled`. Kept in both places deliberately: the stylesheet
+ * has to stand on its own before any script runs, and this is what an
+ * unparseable maker value falls back to.
+ */
+const DEFAULT_COLOR = '#F2B100';
+
 const SHAPES: readonly Shape[] = ['star', 'heart', 'circle'];
 const SIZES: readonly IInputs['size']['raw'][] = ['small', 'medium', 'large'];
 
@@ -148,6 +156,7 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
         this.container.dir = context.userSettings.isRTL ? 'rtl' : 'ltr';
         this.container.classList.toggle('StarRating--disabled', !this.interactive);
         this.container.classList.toggle('StarRating--invalid', parameter.error);
+        this.container.style.setProperty('--StarRating-filled', this.resolveColor(context));
 
         for (const [index, icon] of this.icons.entries()) {
             icon.classList.remove('is-full', 'is-half');
@@ -335,6 +344,25 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
         }
 
         return (context.parameters.value.type ?? '').trim() === WHOLE_ONLY ? 1 : 0.5;
+    }
+
+    /**
+     * The maker's colour, or the default.
+     *
+     * A custom property accepts *any* string — the CSSOM does not validate it,
+     * because a custom property has no type until something substitutes it. So
+     * a typo would silently blank the icons, and a value like `url(evil.svg)`
+     * would be a live paint server once `fill: var(…)` substitutes it.
+     * `CSS.supports` is the browser's own colour parser and rejects both.
+     */
+    private resolveColor(context: ComponentFramework.Context<IInputs>): string {
+        const requested = context.parameters.color.raw?.trim();
+
+        if (!requested) {
+            return DEFAULT_COLOR;
+        }
+
+        return CSS.supports('color', requested) ? requested : DEFAULT_COLOR;
     }
 
     /**

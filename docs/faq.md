@@ -25,6 +25,13 @@ column to Decimal with a precision of at least 1 — see
 The control never draws more icons than the bound column's **Maximum value**
 allows. Raise the column's maximum, or lower the **Maximum** property to match.
 
+## Why do the icons wrap onto two rows?
+
+The column is narrower than the scale needs. Twenty `medium` icons want roughly
+440px; in a narrower field they reflow onto another row rather than being
+clipped at the edge. Widen the form column, drop **Size** to `small`, or lower
+**Maximum**.
+
 ## Can a user clear the rating?
 
 Yes — the clear button, or the `Delete` or `Backspace` key. Hiding the clear

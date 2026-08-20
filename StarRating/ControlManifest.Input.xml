@@ -89,6 +89,24 @@
       <value name="large" display-name-key="size_Large">large</value>
     </property>
 
+    <!--
+      Sets the "StarRating-filled" CSS custom property, which is the one colour
+      the control paints. Free text rather than an Enum so a maker can match
+      their own theme; validated at runtime with CSS.supports, and anything the
+      browser will not accept as a colour falls back to this default.
+
+      (Named without its leading double hyphen on purpose: an XML comment may
+      not contain a double hyphen anywhere at all, and pcf-scripts reports the
+      breach as a bare line and column number rather than saying so.)
+    -->
+    <property name="color"
+              display-name-key="color_Name"
+              description-key="color_Desc"
+              of-type="SingleLine.Text"
+              usage="input"
+              required="false"
+              default-value="#F2B100" />
+
     <property name="showClear"
               display-name-key="showClear_Name"
               description-key="showClear_Desc"

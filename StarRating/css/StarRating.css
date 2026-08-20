@@ -5,13 +5,26 @@
   the palette here is what makes a control fail contrast in dark mode.
 */
 .StarRating {
-    --StarRating-filled: #f2b100;
+    /*
+      The one colour the control paints, and the only one a maker can set: the
+      `color` property writes this custom property on the container at render.
+      The value here is the default, and is what an unparseable maker value
+      falls back to — keep it in step with DEFAULT_COLOR in index.ts.
+    */
+    --StarRating-filled: #F2B100;
     --StarRating-empty: #c8c6c4;
     --StarRating-invalid: #a4262c;
     --StarRating-focus: #0f6cbd;
     --StarRating-size: 20px;
 
-    display: inline-flex;
+    /*
+      `flex`, not `inline-flex`, and wrapping. A form column is narrower than
+      the author of a 20-icon scale expects, and an inline-flex row that cannot
+      wrap simply overflows its cell: the trailing icons and the clear button
+      are painted outside the field and clipped away.
+    */
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
     max-width: 100%;
@@ -22,9 +35,22 @@
 }
 
 .StarRating-group {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 2px;
+
+    /*
+      Both of these are load-bearing at max=20 in a narrow column.
+
+      `min-width: 0` because a flex item's min-width defaults to `auto`, which
+      means "never shrink below your content" — so the group keeps its full
+      438px and pushes the clear button out of the cell instead of reflowing.
+
+      `flex-wrap` because the icons deliberately do not shrink (see below), so
+      the only way to fit is onto a second row.
+    */
+    min-width: 0;
+    flex-wrap: wrap;
 }
 
 .StarRating-group--small {
@@ -42,6 +68,11 @@
 .StarRating-icon {
     width: var(--StarRating-size);
     height: var(--StarRating-size);
+    /*
+      Fixed, never shrunk. Squeezing icons to fit would take a `small` scale
+      below the minimum comfortable touch target, so a cramped column wraps
+      onto another row instead of producing twenty unhittable specks.
+    */
     flex: 0 0 auto;
     cursor: pointer;
     /* The whole control is one tab stop; the icons rove within it. */
@@ -87,6 +118,8 @@
 }
 
 .StarRating-clear {
+    /* Never the thing that gets squeezed out when the row runs short. */
+    flex: 0 0 auto;
     border: none;
     background: none;
     padding: 2px 4px;
@@ -107,6 +140,12 @@
 }
 
 .StarRating-message {
+    /*
+      Its own line, always. As a plain flex item it sits to the *right* of the
+      icons, which reads as a caption rather than as the validation error the
+      platform raised on this column.
+    */
+    flex-basis: 100%;
     margin: 0;
     font-size: 12px;
     color: var(--StarRating-invalid);

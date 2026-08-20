@@ -25,6 +25,7 @@ Set(varRating, 3);
 | Maximum | `5` |
 | Allow half values | `false` |
 | Shape | `"star"` |
+| Colour | `"#F2B100"` |
 | Size | `"medium"` |
 | Show clear button | `true` |
 

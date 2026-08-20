@@ -30,6 +30,18 @@ order: 7
   number box is the better control. Values above 20 are clamped rather than
   rejected.
 
+- **A long scale wraps onto more than one row in a narrow column.** The icons
+  keep their size rather than shrinking to fit, because shrinking them takes
+  the `small` scale below a usable touch target. Twenty `medium` icons need
+  about 440px to sit on one line; below that they reflow. Use a wider form
+  column, a smaller **Size**, or a lower **Maximum** if a single row matters.
+
+- **Only the filled colour is configurable.** **Colour** sets the fill of a
+  selected icon and nothing else. Unselected icons, the error state and the
+  focus ring are fixed, so that contrast and the invalid state hold whatever
+  is chosen. The control has no dark-mode variant of its own; it inherits the
+  host page.
+
 - **Zero is not reachable.** The lowest rating is one icon; empty is expressed
   by clearing the column, not by a zero. A column where zero and blank mean
   different things needs a different control.

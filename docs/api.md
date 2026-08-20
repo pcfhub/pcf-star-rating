@@ -47,3 +47,11 @@ falls back to `star` and `medium` respectively rather than rendering nothing.
 
 **Clearing writes blank, not zero.** Both the clear button and the `Delete` key
 set the column to empty. Zero is not a reachable rating.
+
+**`color` takes any CSS colour.** `#F2B100`, `goldenrod`, `rgb(242 177 0)` and
+`hsl(44 100% 47%)` all work, because the value is handed to the browser's own
+colour parser. A value it cannot read — a typo, or anything that is not a
+colour — falls back to the default `#F2B100` rather than rendering the icons
+blank. It sets one thing: the fill of a selected icon. Unselected icons, the
+error state and the focus ring keep their own colours so that contrast and the
+invalid state survive whatever is chosen.

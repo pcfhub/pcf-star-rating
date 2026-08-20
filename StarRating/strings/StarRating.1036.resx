@@ -122,6 +122,12 @@
   <data name="size_Large" xml:space="preserve">
     <value>Grande</value>
   </data>
+  <data name="color_Name" xml:space="preserve">
+    <value>Couleur</value>
+  </data>
+  <data name="color_Desc" xml:space="preserve">
+    <value>La couleur d'une icone remplie. N'importe quelle couleur CSS ; la valeur par defaut s'applique si le navigateur ne peut pas la lire.</value>
+  </data>
   <data name="showClear_Name" xml:space="preserve">
     <value>Afficher le bouton d’effacement</value>
   </data>

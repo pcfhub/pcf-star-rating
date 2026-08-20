@@ -17,6 +17,7 @@ The default configuration, on a Whole Number column capped at 5.
 | Allow half values | `false` |
 | Shape | `star` |
 | Size | `medium` |
+| Colour | `#F2B100` |
 | Show clear button | `true` |
 
 A user clicks the third star, or tabs to the control and presses the right arrow
@@ -34,6 +35,7 @@ The same control on a **Decimal Number** column with a precision of at least 1.
 | Allow half values | `true` |
 | Shape | `star` |
 | Size | `large` |
+| Colour | `#0F6CBD` |
 | Show clear button | `true` |
 
 Clicking the **left half** of an icon selects the half step; the right half
@@ -57,6 +59,7 @@ For a required column where blank is not a meaningful answer.
 | Allow half values | `false` |
 | Shape | `heart` |
 | Size | `small` |
+| Colour | `#C4314B` |
 | Show clear button | `false` |
 
 Hiding the clear button removes the mouse path to blank. `Delete` still clears

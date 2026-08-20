@@ -122,6 +122,12 @@
   <data name="size_Large" xml:space="preserve">
     <value>大</value>
   </data>
+  <data name="color_Name" xml:space="preserve">
+    <value>色</value>
+  </data>
+  <data name="color_Desc" xml:space="preserve">
+    <value>塗りつぶしアイコンの色。任意の CSS カラー。ブラウザーが解釈できない場合は既定値に戻ります。</value>
+  </data>
   <data name="showClear_Name" xml:space="preserve">
     <value>クリアボタンを表示</value>
   </data>
