@@ -15,7 +15,7 @@ own tooling: `npm run refreshTypes`, `npm run lint`, `npm run build`, and a full
 | `npm run check` | passes, including the demo-path check once `out/` exists |
 | `npm run lint` | clean |
 | `npm run build` | `out/controls/StarRating/bundle.js`, **18.7 KiB** |
-| `msbuild` Release pack | rebuilds production: **8,773 bytes**, both zips |
+| `msbuild` Release pack | rebuilds production: **8,785 bytes**, both zips |
 
 No React anywhere: `grep -c '__SECRET_INTERNALS\|react-dom.production'` on the
 bundle returns 0. For scale, `pcf-barcode-scanner` is 7.78 KiB and
@@ -154,6 +154,30 @@ confirming against `demo-harness/context/Parameters.ts` in the hub repo, but it
 is no longer the difference between `full` and `limited`.
 
 ## Solution pack
+
+### A green msbuild is not proof the production bundle was rebuilt
+
+The skill says msbuild is the only local step that compiles in production mode,
+so a green `npm run build` is not evidence the shipping bundle compiles. True,
+and incomplete — a green **msbuild** is not evidence either.
+
+Observed here. After `npm run build` followed by a pack, `out/controls/
+StarRating/bundle.js` was 20,271 bytes and still carried the webpack
+"the eval devtool has been used... neither made for production" banner. msbuild
+had reported both packs complete and no errors: its incremental check found
+`obj/` up to date from an earlier pack and skipped the PCF build entirely,
+leaving whatever `npm run build` had last written in `out/`.
+
+So the production number is only trustworthy from a clean tree:
+
+```powershell
+Remove-Item -Recurse -Force obj, out, Solution\obj, Solution\bin
+```
+
+Clean, this control is **8,785 bytes** — against 19.4 KiB from
+`npm run build`. Confirm by looking rather than by exit code: a production
+bundle is one long line with no banner, and
+`head -c 200 out/controls/<Control>/bundle.js` settles it in a second.
 
 Packs both types. Worth recording because the template's own comment is slightly
 wrong: `release.yml:76` says msbuild "calls the unmanaged one
