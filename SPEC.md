@@ -78,7 +78,7 @@ happened" is otherwise a guaranteed issue.
 
 All of it compiled against the real `@types/powerapps-component-framework`
 definitions rather than assumed. Each is a candidate for promotion into
-`_template/__CONTROL__/index.ts`:
+the template's `<Control>/index.ts`:
 
 - **`context.mode.isVisible`** — canvas relies on it; a model-driven form hides
   the section itself. Honouring it costs one class toggle and covers both.
@@ -152,6 +152,32 @@ Checked rather than assumed, and all three are wrong in `SKILL.md` or stale:
   step is already done.
 - Its final output block already says to commit `package-lock.json`, as step 2
   of 6. The skill and `TEMPLATE.md` both describe this as a trap to remember.
+
+## What went back into `_template`
+
+This control existed to find these, so they belong here as well as in the
+template's own history (`_template` commit `3a4f6dd`).
+
+- **`check-template.mjs` now validates the control shape** — `control.type` and
+  `control.framework` against the manifest under the hub's dataset > virtual >
+  field precedence, `demo.fidelity` against the four values, and `limited`
+  against having any `demo.limitations` at all. Three items moved off the
+  review checklist and into CI.
+- **It caught a real `setup.mjs` bug on its first run.** `--framework react`
+  set `control-type="virtual"` and `framework: "react_virtual"` but left
+  `control.type` at `"field"`. Every React control ever scaffolded from this
+  template started with a `pcfhub.json` the hub would silently re-derive. The
+  comment directly above the bug read "nothing validates that agreement but a
+  reader", which had just stopped being true.
+- **The template's `index.ts` carries the state block** proven above, with the
+  text-input equivalent of each branch (`attributes.MaxLength` in place of
+  `MaxValue`).
+- **A `SPEC.md` skeleton, a `demo.presets` scaffold**, and `TEMPLATE.md`
+  sections on presets and multi-locale resx.
+
+One thing did **not** go back: `parameters.value.type` as the half-step signal.
+It is specific to a numeric type group and would be noise in a text-field
+template. It belongs in the skill instead.
 
 ## Still open
 
