@@ -12,6 +12,8 @@ like a form control: it honours the form's read-only state, column-level
 security, the column's own maximum, the user's locale and reading direction, and
 it is fully operable from the keyboard.
 
+::image{src=media/screenshot.png alt="A Score column drawn as five stars with two and a half filled, and a clear button at the end of the row" zoom}
+
 ## Why this one
 
 - **It is a real radio group.** Arrow keys move through the values, `Home` and
