@@ -187,7 +187,7 @@ with the template's `Solution.cdsproj` the output is `Solution.zip`, not
 (`*.zip` minus `*_managed.zip`) so it works either way; only the comment is
 wrong.
 
-Identity, permanent from here: publisher `PCFHub`, prefix `pcfhu`, solution
+Identity, permanent from here: publisher `PCFHub`, prefix `pcfhub`, solution
 `<UniqueName>StarRatingSolution</UniqueName>`.
 
 ## Things setup.mjs already handles that the skill lists as manual
