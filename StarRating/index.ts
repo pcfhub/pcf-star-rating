@@ -88,7 +88,11 @@ export class StarRating implements ComponentFramework.StandardControl<IInputs, I
         this.clearButton = document.createElement('button');
         this.clearButton.className = 'StarRating-clear';
         this.clearButton.type = 'button';
-        this.clearButton.innerHTML = '&#x2715;';
+        // `textContent`, not `innerHTML = '&#x2715;'`. It is one character, so
+        // the entity bought nothing but an HTML parse of a string this control
+        // wrote itself — and the control now sets no innerHTML anywhere, which
+        // is one fewer place for markup to arrive from.
+        this.clearButton.textContent = '✕';
         this.clearButton.addEventListener('click', this.onClear);
 
         this.message = document.createElement('p');
