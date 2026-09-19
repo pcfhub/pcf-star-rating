@@ -4,6 +4,7 @@
     "name": "Star Rating",
     "tagline": "A numeric column as an accessible star rating.",
     "category": "input",
+    "hosts": ["canvas", "model-driven"],
     "tags": [
         "rating",
         "accessible",
