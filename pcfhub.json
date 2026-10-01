@@ -3,6 +3,7 @@
     "slug": "pcf-star-rating",
     "name": "Star Rating",
     "tagline": "A numeric column as an accessible star rating.",
+    "summary": "Draws a whole number or decimal column as a row of stars a user can click or type into. It behaves like a form control: it honours the form's read-only state, column security and the column's own maximum.\n\n- A real radio group: arrow keys, Home, End and Delete all work, and a screen reader hears 3 of 5\n- Half steps only when the column can store them\n- Colours come from CSS custom properties, with high contrast handled\n- No framework in the bundle, which is under 20 KB",
     "category": "input",
     "hosts": ["canvas", "model-driven"],
     "tags": [
