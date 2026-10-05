@@ -13,6 +13,8 @@
         "numeric",
         "themeable"
     ],
+    "supportLevel": "reference",
+    "builtWith": "ai",
     "control": {
         "namespace": "PCFHub",
         "constructor": "StarRating",

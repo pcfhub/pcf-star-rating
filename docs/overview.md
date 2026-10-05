@@ -12,6 +12,10 @@ like a form control: it honours the form's read-only state, column-level
 security, the column's own maximum, the user's locale and reading direction, and
 it is fully operable from the keyboard.
 
+:::callout{type=warning}
+**Reference example · built with AI.** This control was written with AI (Claude) and tested on a live Dataverse form; its code has not been reviewed line by line. It is published as a worked example and is not maintained — read the source and [SPEC.md](https://github.com/pcfhub/pcf-star-rating/blob/main/SPEC.md) (what was measured on the form) before you use it. Fixes are not guaranteed.
+:::
+
 ::image{src=media/screenshot.png alt="A Score column drawn as five stars with two and a half filled, and a clear button at the end of the row" zoom}
 
 ## Why this one
