@@ -43,10 +43,33 @@
     'use strict';
 
     var STRINGS = {
-        StarRating_AriaLabel: 'Rating',
-        StarRating_NoAccess: 'You do not have access to this value.',
-        StarRating_Clear: 'Clear the rating',
-        StarRating_Empty: 'Not rated',
+        StarRating_Name: "Star Rating",
+        StarRating_Desc: "A numeric column as an accessible star rating.",
+        value_Name: "Value",
+        value_Desc: "The whole number or decimal column this control reads and writes.",
+        max_Name: "Maximum",
+        max_Desc: "How many icons to show. Clamped to the column’s own maximum.",
+        allowHalf_Name: "Allow half values",
+        allowHalf_Desc: "Allow half steps. Ignored on a whole number column, which cannot store them.",
+        shape_Name: "Shape",
+        shape_Desc: "Which icon to draw.",
+        shape_Star: "Star",
+        shape_Heart: "Heart",
+        shape_Circle: "Circle",
+        size_Name: "Size",
+        size_Desc: "Icon size.",
+        size_Small: "Small",
+        size_Medium: "Medium",
+        size_Large: "Large",
+        color_Name: "Colour",
+        color_Desc: "The colour of a filled icon. Any CSS colour; falls back to the default if the browser cannot read it.",
+        showClear_Name: "Show clear button",
+        showClear_Desc: "Show a button that sets the column back to empty.",
+        StarRating_AriaLabel: "Rating",
+        StarRating_Clear: "Clear rating",
+        StarRating_ValueText: "{0} of {1}",
+        StarRating_Empty: "Not rated",
+        StarRating_NoAccess: "You do not have access to this value.",
     };
 
     var SECURITY = {
